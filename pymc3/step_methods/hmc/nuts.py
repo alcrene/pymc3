@@ -156,6 +156,16 @@ class NUTS(BaseHMC):
         self._reached_max_treedepth = 0
 
     def _hamiltonian_step(self, start, p0, step_size):
+        # Catch errors, print more helpful info and launch debugger
+        if not np.isfinite(start.energy):
+            print("State at the point of failure\n-----------------------")
+            print("Variables:", ', '.join(v.name for v in self.vars))  # Get the ordering so we can match values to variables
+            print("q0:\n", q0)
+            print("p0:\n", p0)
+            import pdb; pdb.set_trace()
+            raise ValueError('Bad initial energy: %s. The model '
+                             'might be misspecified.' % start.energy)
+
         if self.tune and self.iter_count < 200:
             max_treedepth = self.early_max_treedepth
         else:
