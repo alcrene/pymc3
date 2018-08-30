@@ -105,6 +105,9 @@ class _QuadFormBase(Continuous):
 
     def _quaddist_chol(self, delta):
         chol_cov = self.chol_cov
+        # import theano_shim as shim
+        # name = ' '.join([x.name for x in shim.graph.symbolic_inputs([delta])])
+        # chol_cov = shim.print(chol_cov, "chol_cov ({})".format(name))
         _, k = delta.shape
         k = pm.floatX(k)
         diag = tt.nlinalg.diag(chol_cov)
