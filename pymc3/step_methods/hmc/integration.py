@@ -90,7 +90,14 @@ class CpuLeapfrogIntegrator(object):
         # q_new = q + epsilon * v_new
         axpy(v_new, q_new, a=epsilon)
 
+        # DEBUG
+        #import time
+        #import pdb; pdb.set_trace()
+        #print("Evaluating log p @ {}".format(q_new))
+        #t1 = time.time()
         logp = self._logp_dlogp_func(q_new, q_new_grad)
+        #t2 = time.time()
+        #print("Took {:.3}s".format(t2-t1))
 
         # p_new = p_new + dt * q_new_grad
         axpy(q_new_grad, p_new, a=dt)

@@ -91,6 +91,8 @@ class HamiltonianMC(BaseHMC):
         path_length = np.random.rand() * self.path_length
         n_steps = max(1, int(path_length / step_size))
 
+        # DEBUG
+        #print("H step: {} steps ({} / {}).".format(n_steps, path_length, step_size))
         energy_change = -np.inf
         state = start
         div_info = None
